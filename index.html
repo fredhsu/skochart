@@ -1,0 +1,87 @@
+<html>
+	<head>
+<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+
+	</head>
+	<body>
+<h2>
+Predicted temp: 40
+</h2>
+		<canvas id="myChart"></canvas>
+		<script>
+//$.getJSON( "ajax/test.json", function( data ) {})
+//function doPoll(){
+//    $.post('ajax/test.html', function(data) {
+//        alert(data);  // process results here
+//        setTimeout(doPoll,5000);
+//    });
+//}
+function addData(label, data) {
+  chart = this.chart
+	chart.data.labels.push(label);
+	chart.data.datasets.forEach((dataset) => {
+		dataset.data.push(data);
+	if (chart.data.labels.length > 20) {
+		dataset.data.shift();
+	chart.data.labels.shift();
+	}
+	});
+	chart.update();
+}
+
+function doPoll() {
+	console.log("Poll");
+	temp = Math.floor(Math.random() * 100);
+	addData("August", 40);
+	label = temp.toString();
+	addData(label, temp);
+	//setInterval(doPoll(), 5000);
+}
+
+function addRandomData() {
+	console.log("Poll");
+	temp = Math.floor(Math.random() * 100);
+	label = temp.toString();
+	addData(label, temp);
+}
+
+var ctx = document.getElementById('myChart').getContext('2d');
+var chart = new Chart(ctx, {
+	// The type of chart we want to create
+	type: 'line',
+
+	// The data for our dataset
+	data: {
+		labels: ["January", "February", "March", "April", "May", "June", "July"],
+		datasets: [{
+			fill: false,
+			label: "My First dataset",
+			borderColor: 'rgb(255, 99, 132)',
+			data: [0, 10, 5, 2, 20, 30, 45],
+		},
+		{
+			label: 'Line Dataset',
+			pointBackgroundColor: 'rgb(66, 19, 32)',
+			data: [10, 20, 30, 40, 30, 20, 10],
+			type: 'line',
+			showLine: false
+		}
+		]
+	},
+
+	// Configuration options go here
+	options: {}
+});
+
+function test() {
+	console.log("interval");
+}
+	var intervalVar;
+	intervalVar = setInterval(addRandomData, 1000);
+	//intervalVar = setInterval(test, 2000);
+	// doPoll();
+
+		</script>
+	</body>
+</html>
